@@ -1,0 +1,40 @@
+<html lang="en">
+  <head>
+    <meta name="google-signin-scope" content="profile email" />
+    <meta
+      name="google-signin-client_id"
+      content="877081955101-bitpnkk756v6ri5rgk8p9su9uq60s5s6.apps.googleusercontent.com"
+    />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+  </head>
+  <body>
+    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <script>
+      function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        console.log("USER-ID: " + profile.getId()); // Don't send this directly to your server!
+        /* console.log("Full Name: " + profile.getName());
+        console.log("Given Name: " + profile.getGivenName());
+        console.log("Family Name: " + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());*/
+
+        // The ID token you need to pass to your backend:
+        let auth_response = googleUser.getAuthResponse()
+        var id_token = auth_response.id_token;
+        let access_token = auth_response.access_token;
+        let expiration = auth_response.expires_in;
+        let expiration_time = auth_response.expires_at;
+        
+        console.log("Bearer " +   access_token);
+        console.log("Scope " + auth_response.scope)
+        console.log("id_token: " + auth_response.id_token);
+        console.log("first_issued_at " + auth_response.first_issued_at)
+        //console.log("TIME_LET")
+        //console.log(expiration)    
+        console.log("expiration_time => " + expiration_time);
+      }
+    </script>
+  </body>
+</html>
