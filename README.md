@@ -44,12 +44,54 @@ Select the created project. From the side menu select API Manager, press the ENA
 
 4. Give to PUB/SUB service  permission for be a publisher at    GMail API
    
-   Pub / Sub needs permissions to send push messages. It is therefore necessary to guarantee the privilege publish to the service: serviceAccount: gmail-api-push@system.gserviceaccount.com
+   Pub / Sub needs permissions to send push messages. It is therefore necessary to guarantee the privilege publish to the service account: gmail-api-push@system.gserviceaccount.com
    1. So go to the Topic Dashboard, select your topic recently created and then in more actions select the option **View Permissions**
    2. Add Memember 
       In the text box add *New Memeber* add gmail-api-push@system.gserviceaccount.com with the role PUB/SUB publisher.
 
-      
+    We have completed the PUB/SUB basic configuration for our project.
+
+
+### Third Part Generate Bearer Token 
+
+With the fiven Code at /templates/custom1_index.html
+
+We can generate the permissions to our gmail account, once you have logged and authorized the permissions to our application we can generate the Bearer Token with: 
+```javascript
+gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token
+```
+
+### Make  the API call for put to Watch to our Topic
+We need need put to our topic send the PUSH notification from GMAIL so we need to use GMAIL client API to INVOKE the method WATCH 
+
+here: 
+https://developers.google.com/gmail/api/v1/reference/users/watch
+
+
+- request POST 
+- url https://gmail.googleapis.com/gmail/v1/users/me/watch \
+- Headers:
+  - 'Content-Type': "application/json",
+  - 'Authorization': "Bearer "TOKEN""
+  - data 
+    ```json
+    {
+	"topicName":"projects/test-gapi-1607289061594/topics/your_topic",
+	"labelIds": ["INBOX"] 
+    }
+    ```
+The response of this api call must to be something like: 
+```json
+{
+  "historyId": "1166609",
+  "expiration": "1607903297492"
+}
+```
+
+Now each time that we recieve a new email our API recieve a a POST Request with a a default payload.
+
+
+### Processing the incoming mails
 
 
 
