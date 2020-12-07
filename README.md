@@ -88,7 +88,7 @@ The response of this api call must to be something like:
 }
 ```
 
-Now each time that we recieve a new email our API recieve a a POST Request with a a default payload.
+Now each time that we recieve a new email our API recieve a a POST Request from PUB/SUB Topic with a a default payload.
 
 
 ### Processing the incoming mails
